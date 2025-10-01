@@ -374,6 +374,25 @@ body.page-gallery {
   margin-top: 55%;
 }
 
+/* Mobile adjustments for MAGNOVITE 2025 heading */
+@media (max-width: 768px) {
+  .hero-text {
+    font-size: 3.25rem;
+    margin-top: 62%;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-text {
+    font-size: 2.75rem;
+    line-height: 1;
+    margin-top: 64%;
+    padding: 0 1rem;
+    overflow-wrap: anywhere;
+  }
+}
+
 .hero-2-container {
   width: 100%;
   height: 100vh;
