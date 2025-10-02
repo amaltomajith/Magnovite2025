@@ -22,6 +22,175 @@
 			rel="stylesheet"
 		/>
 		<link rel="stylesheet" href="./src/style.css" />
+		<style>
+			/* CTA Section Styles */
+			.cta-section {
+				text-align: center;
+				padding: 6rem 2rem;
+				background: linear-gradient(
+					135deg,
+					rgba(255, 0, 255, 0.15),
+					rgba(128, 0, 255, 0.15),
+					rgba(0, 255, 255, 0.1)
+				);
+				margin: 6rem 0 4rem;
+				border-radius: 30px;
+				position: relative;
+				overflow: hidden;
+				border: 1px solid rgba(255, 255, 255, 0.1);
+			}
+
+			.cta-section::before {
+				content: '';
+				position: absolute;
+				top: -50%;
+				left: -50%;
+				width: 200%;
+				height: 200%;
+				background: radial-gradient(
+					circle,
+					rgba(255, 0, 255, 0.1) 0%,
+					transparent 70%
+				);
+				animation: rotate 20s linear infinite;
+			}
+
+			@keyframes rotate {
+				from {
+					transform: rotate(0deg);
+				}
+				to {
+					transform: rotate(360deg);
+				}
+			}
+
+			.cta-title {
+				font-size: clamp(2.5rem, 6vw, 4rem);
+				font-weight: 800;
+				color: #ffffff;
+				margin-bottom: 1.5rem;
+				position: relative;
+				z-index: 2;
+				background: linear-gradient(45deg, #ffffff, #ff00ff, #8000ff);
+				background-size: 200% 200%;
+				-webkit-background-clip: text;
+				background-clip: text;
+				-webkit-text-fill-color: transparent;
+				animation: gradient-shift 3s ease infinite;
+			}
+
+			@keyframes gradient-shift {
+				0%,
+				100% {
+					background-position: 0% 50%;
+				}
+				50% {
+					background-position: 100% 50%;
+				}
+			}
+
+			.cta-text {
+				font-size: 1.3rem;
+				color: rgba(255, 255, 255, 0.9);
+				margin-bottom: 3rem;
+				max-width: 700px;
+				margin-left: auto;
+				margin-right: auto;
+				position: relative;
+				z-index: 2;
+				line-height: 1.6;
+			}
+
+			.cta-buttons {
+				display: flex;
+				gap: 1.5rem;
+				justify-content: center;
+				flex-wrap: wrap;
+			}
+
+			.cta-button {
+				background: linear-gradient(45deg, #ff00ff, #8000ff);
+				border: none;
+				color: white;
+				padding: 1.2rem 3rem;
+				font-size: 1.1rem;
+				font-weight: 700;
+				border-radius: 50px;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				position: relative;
+				z-index: 2;
+				overflow: hidden;
+				min-width: 200px;
+			}
+
+			.cta-button.secondary {
+				background: transparent;
+				border: 2px solid rgba(255, 0, 255, 0.5);
+				color: #ffffff;
+			}
+
+			.cta-button.secondary:hover {
+				background: rgba(255, 0, 255, 0.1);
+				border-color: #ff00ff;
+			}
+
+			.cta-button::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: -100%;
+				width: 100%;
+				height: 100%;
+				background: linear-gradient(
+					90deg,
+					transparent,
+					rgba(255, 255, 255, 0.2),
+					transparent
+				);
+				transition: left 0.6s ease;
+			}
+
+			.cta-button:hover::before {
+				left: 100%;
+			}
+
+			.cta-button:hover {
+				transform: translateY(-5px) scale(1.05);
+				box-shadow: 0 15px 40px rgba(255, 0, 255, 0.4);
+			}
+
+			/* Scroll animations */
+			.scroll-reveal {
+				opacity: 0;
+				transform: translateY(50px);
+				transition: all 0.8s ease;
+			}
+
+			.scroll-reveal.revealed {
+				opacity: 1;
+				transform: translateY(0);
+			}
+
+			/* Responsive Design */
+			@media (max-width: 768px) {
+				.cta-section {
+					padding: 4rem 1rem;
+					margin: 4rem 0 2rem;
+				}
+
+				.cta-buttons {
+					flex-direction: column;
+					align-items: center;
+				}
+
+				.cta-button {
+					min-width: 250px;
+				}
+			}
+		</style>
 	</head>
 	<body id="home">
 		<!-- Navigation -->
@@ -153,6 +322,31 @@
 					</span>
 				</button>
 			</div>
+
+			<!-- Call to Action Section -->
+			<section class="cta-section scroll-reveal">
+				<h2 class="cta-title">Join the Revolution</h2>
+				<p class="cta-text">
+					Be part of something extraordinary. MAGNOVITE'25 is more than an
+					event—it's a movement that shapes the future of technology and
+					innovation.
+				</p>
+				<div class="cta-buttons">
+					<button
+						class="cta-button secondary"
+						onclick="window.location.href='./events.html'"
+					>
+						Explore Events
+					</button>
+					<button
+						class="cta-button primary"
+						onclick="window.location.href='./about.html'"
+					>
+						Learn More
+					</button>
+				</div>
+			</section>
+
 			<footer class="site-footer">
 				<div class="footer-inner">
 					<div class="footer-brand">
@@ -290,4 +484,84 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 	<script defer src="./src/script.js"></script>
+	<script>
+		// CTA Section JavaScript
+		document.addEventListener('DOMContentLoaded', function () {
+			// Scroll reveal animation for CTA section
+			const ctaSection = document.querySelector('.cta-section');
+
+			if (ctaSection) {
+				const observer = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								entry.target.classList.add('revealed');
+							}
+						});
+					},
+					{
+						threshold: 0.1,
+						rootMargin: '0px 0px -50px 0px',
+					}
+				);
+
+				observer.observe(ctaSection);
+			}
+
+			// Enhanced button interactions
+			document.querySelectorAll('.cta-button').forEach((button) => {
+				// Ripple effect on click
+				button.addEventListener('click', function (e) {
+					const rect = this.getBoundingClientRect();
+					const size = Math.max(rect.width, rect.height);
+					const x = e.clientX - rect.left - size / 2;
+					const y = e.clientY - rect.top - size / 2;
+
+					const ripple = document.createElement('span');
+					ripple.style.cssText = `
+						position: absolute;
+						width: ${size}px;
+						height: ${size}px;
+						left: ${x}px;
+						top: ${y}px;
+						background: rgba(255, 255, 255, 0.3);
+						border-radius: 50%;
+						pointer-events: none;
+						transform: scale(0);
+						animation: ripple-animation 0.6s ease-out;
+					`;
+
+					this.appendChild(ripple);
+
+					setTimeout(() => {
+						ripple.remove();
+					}, 600);
+				});
+
+				// Hover glow effect
+				button.addEventListener('mouseenter', function () {
+					this.style.boxShadow = '0 0 30px rgba(255, 0, 255, 0.5)';
+				});
+
+				button.addEventListener('mouseleave', function () {
+					this.style.boxShadow = '';
+				});
+			});
+
+			// Add ripple animation keyframes if not already present
+			if (!document.querySelector('style[data-cta-animations]')) {
+				const style = document.createElement('style');
+				style.setAttribute('data-cta-animations', 'true');
+				style.textContent = `
+					@keyframes ripple-animation {
+						to {
+							transform: scale(2);
+							opacity: 0;
+						}
+					}
+				`;
+				document.head.appendChild(style);
+			}
+		});
+	</script>
 </html>
