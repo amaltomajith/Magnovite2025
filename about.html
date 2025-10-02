@@ -23,13 +23,36 @@
 		/>
 		<link rel="stylesheet" href="./src/style.css" />
 		<style>
+			/* Debug - Ensure content is visible */
+			* {
+				box-sizing: border-box;
+			}
+
+			body {
+				margin: 0;
+				padding: 0;
+				font-family: 'Poppins', sans-serif;
+				overflow-y: auto !important;
+				overflow-x: hidden !important;
+				height: auto !important;
+				width: 100% !important;
+				max-width: 100vw !important;
+			}
+
+			html {
+				overflow-y: auto !important;
+				scroll-behavior: smooth;
+			}
+
 			/* About Page Specific Styles */
 			.about-container {
 				background: #000000;
 				min-height: 100vh;
-				padding-top: 80px;
+				padding-top: 120px;
 				position: relative;
 				overflow-x: hidden;
+				width: 100%;
+				max-width: 100vw;
 			}
 
 			.about-hero {
@@ -101,10 +124,10 @@
 
 			.about-subtitle {
 				font-size: clamp(1.2rem, 3vw, 2rem);
-				color: rgba(255, 255, 255, 0.8);
+				color: rgba(255, 255, 255, 0.9);
 				font-weight: 600;
 				margin-bottom: 3rem;
-				opacity: 0;
+				opacity: 1;
 				animation: fadeInUp 1s ease 0.5s forwards;
 			}
 
@@ -127,8 +150,8 @@
 
 			.content-section {
 				margin-bottom: 8rem;
-				opacity: 0;
-				transform: translateY(50px);
+				opacity: 1;
+				transform: translateY(0);
 				transition: all 0.8s ease;
 			}
 
@@ -275,8 +298,9 @@
 
 			.timeline {
 				position: relative;
-				max-width: 800px;
+				max-width: 1000px;
 				margin: 4rem auto;
+				padding: 0 2rem;
 			}
 
 			.timeline::before {
@@ -293,7 +317,7 @@
 			.timeline-item {
 				position: relative;
 				margin: 3rem 0;
-				opacity: 0;
+				opacity: 1;
 				animation: slideInFromLeft 0.8s ease forwards;
 			}
 
@@ -328,9 +352,16 @@
 				backdrop-filter: blur(10px);
 				border-radius: 15px;
 				padding: 2rem;
-				margin: 0 2rem;
 				border: 1px solid rgba(255, 255, 255, 0.1);
 				position: relative;
+				width: 45%;
+				margin-left: 0;
+				margin-right: auto;
+			}
+
+			.timeline-item:nth-child(even) .timeline-content {
+				margin-left: auto;
+				margin-right: 0;
 			}
 
 			.timeline-date {
@@ -345,6 +376,9 @@
 				font-weight: 700;
 				font-size: 0.9rem;
 				z-index: 2;
+				white-space: nowrap;
+				min-width: 70px;
+				text-align: center;
 			}
 
 			.team-grid {
@@ -544,11 +578,21 @@
 					margin-bottom: 4rem;
 				}
 
+				.timeline {
+					padding: 0 1rem;
+				}
+
 				.timeline::before {
 					left: 20px;
 				}
 
 				.timeline-content {
+					width: calc(100% - 80px);
+					margin-left: 60px;
+					margin-right: 0;
+				}
+
+				.timeline-item:nth-child(even) .timeline-content {
 					margin-left: 60px;
 					margin-right: 0;
 				}
@@ -570,8 +614,8 @@
 
 			/* Scroll animations */
 			.scroll-reveal {
-				opacity: 0;
-				transform: translateY(50px);
+				opacity: 1;
+				transform: translateY(0);
 				transition: all 0.8s ease;
 			}
 
@@ -671,9 +715,9 @@
 			<!-- Hero Section -->
 			<section class="about-hero">
 				<div class="about-hero-content">
-					<h1 class="about-title">ABOUT</h1>
+					<h1 class="about-title">ABOUT MAGNOVITE'25</h1>
 					<p class="about-subtitle">
-						Discover the Legacy of Innovation & Excellence
+						Celebrating 15 Years of Innovation, Creativity & Excellence
 					</p>
 				</div>
 			</section>
@@ -688,10 +732,10 @@
 							<div class="card-icon">🎯</div>
 							<h3 class="card-title">Our Mission</h3>
 							<p class="card-text">
-								To create an unparalleled platform that celebrates innovation,
-								creativity, and collaboration among the brightest minds in
-								technology and beyond. MAGNOVITE'25 stands as a beacon of
-								excellence, fostering connections that transcend boundaries.
+								MAGNOVITE'25, the 15th edition of CHRIST University's flagship
+								fest, fosters creativity, collaboration, healthy competition,
+								and positive connections among participants from across India
+								and beyond.
 							</p>
 						</div>
 						<div class="content-card">
@@ -722,28 +766,24 @@
 					<h2 class="section-title">By The Numbers</h2>
 					<div class="stats-grid">
 						<div class="stat-item">
-							<span class="stat-number">15+</span>
+							<span class="stat-number">15</span>
 							<span class="stat-label">Years of Excellence</span>
 						</div>
 						<div class="stat-item">
 							<span class="stat-number">5000+</span>
-							<span class="stat-label">Participants</span>
+							<span class="stat-label">Expected Participants</span>
 						</div>
 						<div class="stat-item">
-							<span class="stat-number">50+</span>
+							<span class="stat-number">40+</span>
 							<span class="stat-label">Events & Competitions</span>
 						</div>
 						<div class="stat-item">
-							<span class="stat-number">100+</span>
+							<span class="stat-number">200+</span>
 							<span class="stat-label">Partner Institutions</span>
 						</div>
 						<div class="stat-item">
-							<span class="stat-number">₹10L+</span>
+							<span class="stat-number">₹15L+</span>
 							<span class="stat-label">Prize Pool</span>
-						</div>
-						<div class="stat-item">
-							<span class="stat-number">24/7</span>
-							<span class="stat-label">Innovation Hub</span>
 						</div>
 					</div>
 				</section>
@@ -753,35 +793,35 @@
 					<h2 class="section-title">Our Journey</h2>
 					<div class="timeline">
 						<div class="timeline-item" style="animation-delay: 0.1s">
-							<div class="timeline-date">2009</div>
+							<div class="timeline-date">2010</div>
 							<div class="timeline-content">
 								<h3 class="card-title">The Beginning</h3>
 								<p class="card-text">
-									MAGNOVITE was born with a vision to create the ultimate
-									technology fest, bringing together innovative minds from
-									across the country.
+									MAGNOVITE was born at CHRIST University, Kengeri Campus with a
+									vision to create the ultimate technology and cultural fest,
+									bringing together innovative minds from across the country.
 								</p>
 							</div>
 						</div>
 						<div class="timeline-item" style="animation-delay: 0.3s">
-							<div class="timeline-date">2015</div>
+							<div class="timeline-date">2018</div>
 							<div class="timeline-content">
 								<h3 class="card-title">National Recognition</h3>
 								<p class="card-text">
-									Achieved national acclaim with participation from over 200
-									colleges and universities, establishing ourselves as a premier
-									tech festival.
+									Achieved national acclaim with participation from over 300
+									colleges and universities, establishing ourselves as
+									Karnataka's premier tech and cultural festival.
 								</p>
 							</div>
 						</div>
 						<div class="timeline-item" style="animation-delay: 0.5s">
-							<div class="timeline-date">2020</div>
+							<div class="timeline-date">2023</div>
 							<div class="timeline-content">
-								<h3 class="card-title">Digital Revolution</h3>
+								<h3 class="card-title">Post-Pandemic Revival</h3>
 								<p class="card-text">
-									Pioneered virtual events during the pandemic, maintaining our
-									commitment to innovation and accessibility for all
-									participants.
+									Successfully transitioned back to in-person events with
+									enhanced hybrid capabilities, maintaining our commitment to
+									innovation and accessibility for all participants.
 								</p>
 							</div>
 						</div>
@@ -791,8 +831,8 @@
 								<h3 class="card-title">The Future is Now</h3>
 								<p class="card-text">
 									Celebrating our 15th edition with cutting-edge technologies,
-									AI integration, and a hybrid experience that sets new industry
-									standards.
+									AI integration, sustainable practices, and an immersive
+									experience that sets new industry standards.
 								</p>
 							</div>
 						</div>
@@ -804,39 +844,43 @@
 					<h2 class="section-title">Meet Our Team</h2>
 					<div class="team-grid">
 						<div class="team-member">
+							<div class="member-avatar">JD</div>
+							<h3 class="member-name">Jobin Shiji Daniel</h3>
+							<p class="member-role">SWO Faculty Incharge</p>
+							<p class="member-bio">
+								Experienced faculty leader overseeing all aspects of student
+								welfare and event coordination for MAGNOVITE'25, ensuring
+								seamless execution and participant satisfaction.
+							</p>
+						</div>
+						<div class="team-member">
 							<div class="member-avatar">AS</div>
-							<h3 class="member-name">Dr. Arjun Sharma</h3>
-							<p class="member-role">Festival Director</p>
+							<h3 class="member-name">Anirudh Sharma</h3>
+							<p class="member-role">SWO Core Member</p>
 							<p class="member-bio">
-								Visionary leader with 15+ years in technology education, driving
-								innovation and excellence in every aspect of MAGNOVITE.
+								Dynamic student leader driving innovation and collaboration
+								across all technical and cultural events, ensuring MAGNOVITE'25
+								reaches new heights of excellence.
 							</p>
 						</div>
 						<div class="team-member">
-							<div class="member-avatar">PK</div>
-							<h3 class="member-name">Priya Krishnan</h3>
-							<p class="member-role">Technical Lead</p>
+							<div class="member-avatar">TM</div>
+							<h3 class="member-name">Tanmai Mokashi</h3>
+							<p class="member-role">SWO Core Member</p>
 							<p class="member-bio">
-								Expert in AI and machine learning, ensuring our technical events
-								showcase the latest industry trends and technologies.
+								Passionate organizer focused on creating engaging experiences
+								and managing logistics to deliver an unforgettable fest for all
+								participants and attendees.
 							</p>
 						</div>
 						<div class="team-member">
-							<div class="member-avatar">RV</div>
-							<h3 class="member-name">Rahul Verma</h3>
-							<p class="member-role">Student Coordinator</p>
+							<div class="member-avatar">VY</div>
+							<h3 class="member-name">Vyshnavi</h3>
+							<p class="member-role">SWO Core Member</p>
 							<p class="member-bio">
-								Dynamic student leader fostering collaboration and ensuring an
-								unforgettable experience for all participants.
-							</p>
-						</div>
-						<div class="team-member">
-							<div class="member-avatar">SM</div>
-							<h3 class="member-name">Sneha Mehta</h3>
-							<p class="member-role">Events Manager</p>
-							<p class="member-bio">
-								Creative strategist with a passion for organizing world-class
-								events that inspire and engage our diverse community.
+								Creative strategist and event coordinator bringing fresh ideas
+								and enthusiasm to make MAGNOVITE'25 a memorable experience for
+								the entire community.
 							</p>
 						</div>
 					</div>
@@ -932,7 +976,7 @@
 									</svg>
 								</a>
 								<a
-									href="https://www.instagram.com/magnovite_christuniversity/"
+									href="https://www.instagram.com/magnovite.kengeri/"
 									target="_blank"
 									class="social-link instagram-link"
 									aria-label="Instagram"
@@ -1012,7 +1056,10 @@
 											d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
 										/>
 									</svg>
-									<span>Kengeri Campus, Bengaluru</span>
+									<span
+										>Mysore Rd, Kanmanike, Kengeri, Bengaluru, Karnataka
+										560074</span
+									>
 								</div>
 								<div class="contact-item">
 									<svg
@@ -1024,7 +1071,7 @@
 											d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"
 										/>
 									</svg>
-									<span>+91 80 4012 9100</span>
+									<span>+91 80 4012 9100 / 9600</span>
 								</div>
 								<div class="contact-item">
 									<svg
@@ -1036,7 +1083,7 @@
 											d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
 										/>
 									</svg>
-									<span>magnovite@christuniversity.in</span>
+									<span>mail@christuniversity.in</span>
 								</div>
 								<div class="contact-item">
 									<svg
@@ -1049,7 +1096,7 @@
 										/>
 										<path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
 									</svg>
-									<span>February 15-17, 2025</span>
+									<span>February 2025</span>
 								</div>
 							</div>
 						</div>
