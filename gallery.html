@@ -231,8 +231,7 @@
 
 		<!-- Image Detail Modal -->
 		<div id="image-detail-modal">
-			<div class="detail-container">
-			</div>
+			<div class="detail-container"></div>
 		</div>
 
 		<!-- Footer -->
@@ -719,7 +718,8 @@
 						if (!modalImage) {
 							modalImage = document.createElement('img');
 							modalImage.className = 'modal-image';
-							modalImage.style.cssText = 'max-width: 90vw; max-height: 90vh; object-fit: contain; cursor: pointer; border-radius: 0; box-shadow: none;';
+							modalImage.style.cssText =
+								'max-width: 90vw; max-height: 90vh; object-fit: contain; cursor: pointer; border-radius: 0; box-shadow: none;';
 							const container = modal.querySelector('.detail-container');
 							container.appendChild(modalImage);
 
