@@ -3,7 +3,18 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Interactive Gallery</title>
+		<title>Gallery - Magnovite'25</title>
+		<link
+			rel="icon"
+			type="image/png"
+			href="./public/magnovite.png"
+			sizes="32x32 64x64 128x128 192x192"
+		/>
+		<link
+			rel="apple-touch-icon"
+			href="./public/magnovite.png"
+			sizes="180x180"
+		/>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -378,29 +389,8 @@
 		<button id="canvas-close-btn" aria-label="Close image" title="Close (Esc)">
 			✕
 		</button>
-		<div id="image-detail-modal">
-			<div class="detail-container">
-				<h2 style="color: white">Memory Insight Generator</h2>
-				<p style="color: var(--accent-light); margin-bottom: 20px">
-					Image detail is shown behind this panel.
-				</p>
 
-				<div class="llm-controls">
-					<button id="generate-prompt-btn" class="llm-button">
-						✨ Generate Memory Insight
-					</button>
-					<p id="llm-loading" class="loading-message">
-						...Analyzing memory fragments...
-					</p>
-
-					<div id="llm-result" class="llm-result-text"></div>
-				</div>
-
-				<button id="llm-close-btn" class="llm-close-button">X</button>
-			</div>
-		</div>
-
-		<!-- Footer (copied exactly from index.html) -->
+		<!-- Footer -->
 		<footer class="site-footer">
 			<div class="footer-inner">
 				<div class="footer-brand">
@@ -554,38 +544,6 @@
 				'./public/Gallery/7.JPG',
 				'./public/Gallery/8.JPG',
 				'./public/Gallery/9.JPG',
-				'./public/Gallery/10.JPG',
-				'./public/Gallery/11.JPG',
-				'./public/Gallery/12.JPG',
-				'./public/Gallery/13.JPG',
-				'./public/Gallery/14.JPG',
-				'./public/Gallery/15.JPG',
-				'./public/Gallery/16.JPG',
-				'./public/Gallery/17.JPG',
-				'./public/Gallery/18.JPG',
-				'./public/Gallery/19.JPG',
-				'./public/Gallery/20.JPG',
-				'./public/Gallery/21.JPG',
-				'./public/Gallery/22.JPG',
-				'./public/Gallery/23.JPG',
-				'./public/Gallery/24.JPG',
-				'./public/Gallery/25.JPG',
-				'./public/Gallery/26.JPG',
-				'./public/Gallery/27.JPG',
-				'./public/Gallery/28.JPG',
-				'./public/Gallery/29.JPG',
-				'./public/Gallery/30.JPG',
-				'./public/Gallery/31.JPG',
-				'./public/Gallery/32.JPG',
-				'./public/Gallery/33.JPG',
-				'./public/Gallery/34.JPG',
-				'./public/Gallery/35.jpg',
-				'./public/Gallery/36.JPG',
-				'./public/Gallery/37.JPG',
-				'./public/Gallery/38.jpg',
-				'./public/Gallery/39.jpg',
-				'./public/Gallery/40.jpg',
-				'./public/Gallery/41.jpg',
 			];
 
 			class Utilities {
