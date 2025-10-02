@@ -95,79 +95,7 @@
 				z-index: 10;
 			}
 
-			/* --- Loading Screen (Fixed Position over the Canvas) --- */
-			.loading {
-				z-index: 9999;
-				background: var(--bg-dark);
-				color: var(--accent-light);
-				text-align: center;
-				position: fixed;
-				width: 100%;
-				min-height: 100vh;
-				min-height: calc(var(--vh, 1vh) * 100);
-				overflow: hidden;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				opacity: 1;
-				visibility: visible;
-				transition: opacity 0.8s 0.8s var(--ease-in-quint),
-					visibility 0.8s 0.8s var(--ease-in-quint);
-				top: 0;
-			}
-
-			.loading.loaded {
-				opacity: 0;
-				visibility: hidden;
-			}
-
-			.loading-container {
-				position: relative;
-				width: 40%;
-				overflow: hidden;
-			}
-
-			.counter {
-				padding: 0.8rem;
-				transform: translate(0, 0);
-			}
-
-			.counter.loaded {
-				animation: counter-animation 0.8s var(--ease-in-quint) 0.8s 1 normal
-					forwards running;
-			}
-
-			.line {
-				position: absolute;
-				background: var(--accent-line);
-				left: 0;
-				bottom: 0;
-				width: 0;
-				height: 2px;
-			}
-
-			.line.loaded {
-				animation: line-animation 0.8s var(--ease-in-quint) 0s 1 normal forwards
-					running;
-			}
-
-			@keyframes counter-animation {
-				0% {
-					transform: translate(0, 0);
-				}
-				100% {
-					transform: translate(0, 10%);
-				}
-			}
-
-			@keyframes line-animation {
-				0% {
-					left: 0;
-				}
-				100% {
-					left: 100%;
-				}
-			}
+			/* Loading animation removed */
 
 			/* --- New LLM Feature Modal Styles --- */
 			#image-detail-modal {
@@ -373,13 +301,6 @@
 
 		<div class="gallery-container">
 			<div id="app-wrapper">
-				<div class="loading">
-					<div class="loading-container">
-						<p class="counter">0%</p>
-						<div class="line"></div>
-					</div>
-				</div>
-
 				<div class="body-container">
 					<div class="box"></div>
 				</div>
@@ -1273,12 +1194,10 @@
 
 			window.addEventListener('load', () => {
 				const F = new FullScreen();
-				const L = new Loading();
 				let S; // Reference to the Sketch instance
 
-				L.initialize().then(() => {
-					S = new Sketch();
-				});
+				// Start gallery immediately without loading screen
+				S = new Sketch();
 
 				// Canvas close button and ESC handling
 				const canvasCloseBtn = document.getElementById('canvas-close-btn');
