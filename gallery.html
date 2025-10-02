@@ -110,106 +110,28 @@
 				justify-content: center;
 				z-index: 999;
 				backdrop-filter: blur(5px);
+				cursor: pointer; /* Indicate clickable */
 			}
 
 			.detail-container {
-				max-width: 800px;
-				width: 90%;
-				background: var(--bg-dark);
-				border: 2px solid var(--accent-line);
-				border-radius: 10px;
-				padding: 30px;
-				text-align: center;
-				box-shadow: 0 0 20px var(--accent-focus);
-				position: relative;
-			}
-
-			.llm-controls {
-				margin-top: 20px;
-				padding-top: 20px;
-				border-top: 1px solid rgba(158, 63, 255, 0.3);
-			}
-
-			.llm-button {
-				background: var(--accent-line);
-				color: var(--bg-dark);
-				font-weight: 700;
-				padding: 10px 20px;
-				border: none;
-				border-radius: 5px;
-				cursor: pointer;
-				transition: background 0.3s, transform 0.1s;
-			}
-
-			.llm-button:hover {
-				background: var(--accent-focus);
-				transform: scale(1.02);
-			}
-
-			.llm-result-text {
-				margin-top: 15px;
-				color: var(--accent-light);
-				font-size: 1.1rem;
-				min-height: 40px;
-				text-align: left;
-				overflow-wrap: break-word;
-				font-style: italic; /* Style the instruction/result text */
-			}
-
-			.llm-close-button {
-				position: absolute;
-				top: 10px;
-				right: 10px;
+				max-width: 90vw;
+				max-height: 90vh;
 				background: transparent;
-				color: var(--accent-light);
-				border: 1px solid var(--accent-light);
-				border-radius: 50%;
-				width: 30px;
-				height: 30px;
-				line-height: 1;
-				font-size: 16px;
-				cursor: pointer;
-				transition: color 0.3s, border-color 0.3s;
+				border: none;
+				border-radius: 0;
+				padding: 0;
+				text-align: center;
+				box-shadow: none;
+				position: relative;
+				cursor: default;
 			}
 
-			.llm-close-button:hover {
-				color: var(--accent-focus);
-				border-color: var(--accent-focus);
-			}
-
-			.loading-message {
-				color: var(--accent-focus);
-				margin-top: 15px;
-				display: none;
-				font-style: italic;
-			}
 			/* Ensure the canvas remains visible as background */
 			.gallery-container {
 				background: transparent !important;
 			}
 			body > canvas {
 				z-index: 0 !important;
-			}
-			/* Close button for canvas enlargement */
-			#canvas-close-btn {
-				position: fixed;
-				top: 14px;
-				right: 14px;
-				width: 40px;
-				height: 40px;
-				display: none;
-				align-items: center;
-				justify-content: center;
-				border: 1px solid rgba(255, 255, 255, 0.2);
-				background: rgba(255, 255, 255, 0.08);
-				color: #fff;
-				border-radius: 10px;
-				cursor: pointer;
-				z-index: 1100; /* above header (1000) and canvas */
-				transition: all 0.25s ease;
-			}
-			#canvas-close-btn:hover {
-				background: rgba(255, 255, 255, 0.2);
 			}
 		</style>
 	</head>
@@ -307,9 +229,11 @@
 			</div>
 		</div>
 
-		<button id="canvas-close-btn" aria-label="Close image" title="Close (Esc)">
-			✕
-		</button>
+		<!-- Image Detail Modal -->
+		<div id="image-detail-modal">
+			<div class="detail-container">
+			</div>
+		</div>
 
 		<!-- Footer -->
 		<footer class="site-footer">
@@ -390,69 +314,6 @@
 		<script>
 			// Global variables and constants
 			window.currentImageSrc = null;
-			const INITIAL_INSTRUCTION_TEXT =
-				'Click "Generate Memory Insight" to analyze the image and create a unique title.';
-
-			// --- LLM API INTEGRATION ---
-			const callGemini = async (prompt) => {
-				const apiKey = ''; // Leave as-is for Canvas environment
-				const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-				const systemPrompt =
-					"You are a creative caption and story generator for photos. Based on the subject matter provided (which is a random photo), invent a single, whimsical, and short memory or title for the image. The response must be short, imaginative, and engaging. Start the response with a creative title, followed by a colon and a short, single-paragraph description. Example: The Last Quiet Morning: The dew still clung to the edges of the city, a brief pause before the day's neon energy took hold.";
-
-				const payload = {
-					contents: [{ parts: [{ text: prompt }] }],
-					systemInstruction: {
-						parts: [{ text: systemPrompt }],
-					},
-				};
-
-				// Exponential backoff logic
-				for (let i = 0; i < 3; i++) {
-					try {
-						const response = await fetch(apiUrl, {
-							method: 'POST',
-							headers: { 'Content-Type': 'application/json' },
-							body: JSON.stringify(payload),
-						});
-
-						if (!response.ok) {
-							const errorBody = await response.json();
-							throw new Error(
-								`HTTP error! Status: ${response.status} - ${errorBody.error?.message}`
-							);
-						}
-
-						const result = await response.json();
-						const text =
-							result.candidates?.[0]?.content?.parts?.[0]?.text ||
-							'Failed to generate text.';
-						return text;
-					} catch (error) {
-						console.error(`Attempt ${i + 1} failed:`, error);
-						if (i < 2) {
-							const delay = Math.pow(2, i) * 1000 + Math.random() * 500;
-							await new Promise((resolve) => setTimeout(resolve, delay));
-						} else {
-							return 'Error: Could not reach the AI service to generate a memory. Please try again.';
-						}
-					}
-				}
-				return 'Generation failed.';
-			};
-
-			// --- UTILITY FUNCTION ---
-			function getPromptFromSrc(src) {
-				try {
-					const path = new URL(src).pathname;
-					const matches = path.match(/random\/([^/?]+)/);
-					if (matches && matches[1]) {
-						return matches[1].replace(/,/g, ' ').trim();
-					}
-				} catch (e) {}
-				return 'A random artistic photograph';
-			}
 
 			// --- ORIGINAL CLASSES AND LOGIC ---
 			const imagePaths = [
@@ -842,11 +703,6 @@
 							// Store the image src and show the HTML modal
 							window.currentImageSrc = s.image.src;
 							this.showDetailModal();
-							// Reveal close button when enlarged view is active
-							const btn = document.getElementById('canvas-close-btn');
-							if (btn) {
-								btn.style.display = 'inline-flex';
-							}
 
 							this.M.drawImage(s.image.src); // Start drawing the enlarged image on canvas
 							return;
@@ -855,16 +711,34 @@
 				}
 
 				showDetailModal() {
-					// Disable HTML modal overlay; keep canvas enlargement only
+					// Show the HTML modal overlay with the image
+					const modal = document.getElementById('image-detail-modal');
+					if (modal && window.currentImageSrc) {
+						// Create or update the image in the modal
+						let modalImage = modal.querySelector('.modal-image');
+						if (!modalImage) {
+							modalImage = document.createElement('img');
+							modalImage.className = 'modal-image';
+							modalImage.style.cssText = 'max-width: 90vw; max-height: 90vh; object-fit: contain; cursor: pointer; border-radius: 0; box-shadow: none;';
+							const container = modal.querySelector('.detail-container');
+							container.appendChild(modalImage);
+
+							// Add click handler to the modal image to close the modal
+							modalImage.addEventListener('click', () => {
+								if (this) {
+									this.closeDetailModal();
+								}
+							});
+						}
+						modalImage.src = window.currentImageSrc;
+						modal.style.display = 'flex';
+					}
+				}
+				closeDetailModal() {
 					const modal = document.getElementById('image-detail-modal');
 					if (modal) {
 						modal.style.display = 'none';
 					}
-				}
-
-				closeDetailModal() {
-					const modal = document.getElementById('image-detail-modal');
-					modal.style.display = 'none';
 
 					// Trigger the delete animation when closing the detail view
 					this.isDeleating = true;
@@ -872,8 +746,10 @@
 						this.isDeleating = false;
 						this.isDisplayed = false;
 					}, 160);
-				}
 
+					// Clear the current image source
+					window.currentImageSrc = null;
+				}
 				initialize() {
 					if (this.animationId) {
 						cancelAnimationFrame(this.animationId);
@@ -1200,65 +1076,33 @@
 				// Start gallery immediately without loading screen
 				S = new Sketch();
 
-				// Canvas close button and ESC handling
-				const canvasCloseBtn = document.getElementById('canvas-close-btn');
+				// ESC key handling
 				document.addEventListener('keydown', (e) => {
 					if (e.key === 'Escape' && S && S.isDisplayed) {
 						S.closeDetailModal();
-						canvasCloseBtn.style.display = 'none';
-						window.currentImageSrc = null;
 					}
 				});
 
-				// Event listener for the new Gemini feature button
-				const generateBtn = document.getElementById('generate-prompt-btn');
-				const closeBtn = document.getElementById('llm-close-btn');
-				const resultText = document.getElementById('llm-result');
-				const loadingMessage = document.getElementById('llm-loading');
+				// Modal overlay click-to-close (click outside modal content)
+				const modal = document.getElementById('image-detail-modal');
+				if (modal) {
+					modal.addEventListener('click', (e) => {
+						if (e.target === modal) {
+							// Only close if clicking the overlay, not the content
+							if (S) {
+								S.closeDetailModal();
+							}
+						}
+					});
+				}
 
-				generateBtn.addEventListener('click', async () => {
-					if (!window.currentImageSrc) {
-						resultText.innerHTML = 'No image selected.';
-						return;
-					}
-
-					// Get a simple descriptor from the URL to provide context to the LLM
-					const promptContext = getPromptFromSrc(window.currentImageSrc);
-					const userPrompt = `Generate a memory or title for a photo featuring: ${promptContext}.`;
-
-					generateBtn.style.display = 'none';
-					loadingMessage.style.display = 'block';
-					resultText.innerHTML = ''; // Clear result area when starting generation
-
-					const result = await callGemini(userPrompt);
-
-					loadingMessage.style.display = 'none';
-					generateBtn.style.display = 'inline-block';
-
-					if (result.startsWith('Error:')) {
-						resultText.innerHTML = `<strong style="color: var(--accent-focus);">Insight:</strong> ${result}`;
-					} else {
-						resultText.innerHTML = `<strong style="color: var(--accent-focus);">Insight:</strong> ${result}`;
-					}
-				});
-
-				// HTML modal close (kept if ever re-enabled)
-				closeBtn.addEventListener('click', () => {
-					if (S) {
-						S.closeDetailModal();
-						canvasCloseBtn.style.display = 'none';
-						window.currentImageSrc = null; // Clear image context
-					}
-				});
-
-				// Canvas close button click
-				canvasCloseBtn.addEventListener('click', () => {
-					if (S && S.isDisplayed) {
-						S.closeDetailModal();
-						canvasCloseBtn.style.display = 'none';
-						window.currentImageSrc = null;
-					}
-				});
+				// Prevent modal content clicks from closing the modal
+				const modalContent = document.querySelector('.detail-container');
+				if (modalContent) {
+					modalContent.addEventListener('click', (e) => {
+						e.stopPropagation(); // Prevent event bubbling to overlay
+					});
+				}
 			});
 		</script>
 	</body>
